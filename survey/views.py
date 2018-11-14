@@ -21,10 +21,32 @@ def dashboard(request):
         y = float((a / c)*100)
         return y
     
-    nps = calculate_nps(x, len(nps))
+    nps = round(calculate_nps(x, len(nps)), 2)
+
+    #Service score 
+    service = Survey.objects.all().values_list('service', flat=True)
+
+    def detractor(obj):
+        s = 0
+        for i in obj:
+            if (i ==5):
+                s += 1
+            elif (i == 1):
+                s -= 1
+        num = round((s / len(obj))*100, 2)
+        return num
+
+    service = detractor(service)
+
+    #Cleanliness score
+
+    cleanliness = Survey.objects.all().values_list('cleanliness', flat=True)
+    cleanliness = detractor(cleanliness)
 
     context = {
-        'nps': nps
+        'cleanliness': cleanliness,
+        'nps': nps,
+        'service': service
     }
    
     return render(request, 'survey/dashboard.html', context)
