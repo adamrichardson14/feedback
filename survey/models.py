@@ -1,8 +1,11 @@
 from django.db import models
+from datetime import datetime
 
 class Survey(models.Model):
     company = models.CharField(max_length=50, blank=True)
     site = models.CharField(max_length= 100, blank= True)
+    date_submitted = models.DateTimeField(default=datetime.now, blank=True)
+    arrival_date = models.DateTimeField(default=datetime.now, blank=True)
     nps = models.IntegerField()
     service = models.IntegerField()
     cleanliness = models.IntegerField()

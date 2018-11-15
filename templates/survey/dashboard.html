@@ -1,6 +1,44 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container">
+
 <h1>Dashboard</h1>
 <h3>Welcome to the dashboard</h3>
+<p>Number of responses: {{responses}} </p>
+<p>NPS {{ nps }} % </p>
+<p>Service Score {{ service }} % </p>
+<p>Cleanliness Score {{ cleanliness }} % </p>
+<p>Dinner Quality Score {{ dinnerqual }} % </p>
+<p>Dinner Service Score {{ dinnerservice }} % </p>
+<p>Breakfast Quality Score {{ breakfastqual }} % </p>
+<p>Breakfast Service Score {{ breakfastservice }} % </p>
+<p>Team members exceed expectations {{tmexceed}}% of the time</p>
 
-<p>Current NPS {{ nps }} % </p>
-<p>Current Service Score {{ service }} % </p>
-<p>Current Cleanliness Score {{ cleanliness }} % </p>
+<h1>Feedback comments</h1>
+
+{% if feedback %}
+
+<div class="row"><!--  Row Begins-->
+    {% for answer in feedback %}
+ 
+<div class="col-md-6">
+<div class="card">
+    <div class="card-body text-center">
+        <p>{{ answer.anyfeedback }}</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"> Service: {{answer.service}} </li>
+            <li class="list-group-item"> Cleanliness: {{answer.cleanliness}} </li>
+            <li class="list-group-item"> Team Exceed Expectations: {{answer.tmexceed}} </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+    {% endfor %}
+
+</div><!-- row ends-->
+{% endif %}
+
+
+</div>
+{% endblock %}

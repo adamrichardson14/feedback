@@ -1,1 +1,7 @@
-Error handling on survey inputs
+Error handling on survey inputs -- Will include in form.
+
+Filter per company or site.
+
+   
+tmexceeddetails = models.TextField(max_length= 1000, blank=True)
+anyfeedback = models.TextField(max_length= 2500, blank=True)
