@@ -1,9 +1,173 @@
 {% extends 'base.html'%}
+{% load static %}
 {% block content %}
-<div class="container">
 
-<h1>Dashboard</h1>
-<h3>Welcome to the dashboard</h3>
+<div class="container">
+        <h1>Dashboard</h1>
+        <h3>Welcome <span class="text-muted"> {{user.username}}</h3></span>
+
+<div class="row"> <!--SERVICE SECTION -->
+        <h2 class="text-center">Quality of Service</h2>
+        <p class="lead text-center">This is a measure of how your customers rate the service received from the team. This is a net measure. That means we take the amount of people who rate 5/5, and subtract the amount that rate 1/5. This gives the net score.</p>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Service Score
+                </h5>
+                <h6 class="card-subtitle">
+                    Month to date
+                </h6>
+                {% if service > servicetarget %}
+                <h2 class="text-success">{{service}}% :)</h2>
+                {% else %}
+                <h2 class="text-danger">{{service}}% :(</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Service Score
+                </h5>
+                <h6 class="card-subtitle">
+                    Year to date
+                </h6>
+                {% if service > servicetarget %}
+                <h2 class="text-success">{{service}}% :)</h2>
+                {% else %}
+                <h2 class="text-danger">{{service}}% :(</h2>
+                {% endif %}
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Service Variance
+                </h5>
+                <h6 class="card-subtitle">
+                    Variance Year to date
+                </h6>
+                {% if servicevariance > 0  %}
+                <h2 class="text-success">{{servicevariance}}%</h2>
+                {% else %}
+                <h2 class="text-danger">{{servicevariance}}%</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">
+                Service Target
+            </h5>
+            <h6 class="card-subtitle">
+                Year to date
+            </h6>
+            <h2>{{servicetarget}}%</h2>
+        </div>
+    </div>
+    </div>
+
+        
+        
+    </div> <!-- row end-->
+
+
+    <div class="row"> <!--CLEANLINESS SECTION-->
+        <h2 class="text-center">Hotel Cleanliness</h2>
+        <p class="lead text-center">This is a measure of how your customers rate the cleanliness of your hotel. This is a net measure. That means we take the amount of people who rate 5/5, and subtract the amount that rate 1/5. This gives the net score.</p>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Cleanliness Score
+                </h5>
+                <h6 class="card-subtitle">
+                    Month to date
+                </h6>
+                {% if cleanliness > cleanlinesstarget %}
+                <h2 class="text-success">{{cleanliness}}% :)</h2>
+                {% else %}
+                <h2 class="text-danger">{{cleanliness}}% :(</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Cleanliness Score
+                </h5>
+                <h6 class="card-subtitle">
+                    Year to date
+                </h6>
+                {% if cleanliness > cleanlinesstarget %}
+                <h2 class="text-success">{{cleanliness}}% :)</h2>
+                {% else %}
+                <h2 class="text-danger">{{cleanliness}}% :(</h2>
+                {% endif %}
+            </div>
+        </div> 
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Cleanliness Variance
+                </h5>
+                <h6 class="card-subtitle">
+                    Variance Year to date
+                </h6>
+                {% if cleanlinessvariance > 0  %}
+                <h2 class="text-success">{{cleanlinessvariance}}%</h2>
+                {% else %}
+                <h2 class="text-danger">{{cleanlinessvariance}}%</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">
+                Service Target
+            </h5>
+            <h6 class="card-subtitle">
+                Year to date
+            </h6>
+            <h2>{{cleanlinesstarget}}%</h2>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+</div> <!-- container end-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p>Number of responses: {{responses}} </p>
 <p>NPS {{ nps }} % </p>
 <p>Service Score {{ service }} % </p>
@@ -13,6 +177,9 @@
 <p>Breakfast Quality Score {{ breakfastqual }} % </p>
 <p>Breakfast Service Score {{ breakfastservice }} % </p>
 <p>Team members exceed expectations {{tmexceed}}% of the time</p>
+
+
+
 
 <h1>Feedback comments</h1>
 
@@ -42,3 +209,6 @@
 
 </div>
 {% endblock %}
+
+
+

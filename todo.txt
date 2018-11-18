@@ -1,7 +1,11 @@
 Error handling on survey inputs -- Will include in form.
+Time frams on website. Filtered data per month
+    YTD and Monthly view
+Reset data every month
 
-Filter per company or site.
+Implement targets and variance to targets
 
-   
-tmexceeddetails = models.TextField(max_length= 1000, blank=True)
-anyfeedback = models.TextField(max_length= 2500, blank=True)
+Implement areas for larger companies -- custom filter sets 
+Comment listing screen -- Twitter feed for comments 
+    Possibility of pictures in feedback??
+Import/create historic data

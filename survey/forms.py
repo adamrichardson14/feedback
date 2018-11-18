@@ -4,7 +4,7 @@ from .models import Survey
 class SurveyForm(ModelForm):
     class Meta:
         model = Survey
-        exclude = ['company', 'site', 'date_submitted', 'arrival_date']
+        exclude = ['company', 'site', 'date_submitted', 'arrival_date', 'servicetarget', 'cleanlinesstarget', 'tmexceedtarget']
         labels = {
             'email': ('Please enter your email here'),
             'nps': ('How likely are you to recommend our hotel to your friends and family?'),
