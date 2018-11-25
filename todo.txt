@@ -9,3 +9,12 @@ Implement areas for larger companies -- custom filter sets
 Comment listing screen -- Twitter feed for comments 
     Possibility of pictures in feedback??
 Import/create historic data
+
+date_submitted filtered by month. 
+
+
+Total responses each month 
+Scores for each month historically
+
+
+Count of scores in current month ... Service and NPS 

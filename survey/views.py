@@ -7,6 +7,7 @@ from .forms import SurveyForm
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from datetime import datetime
 
 def questions(request):
     if request.method == "POST":
@@ -25,8 +26,7 @@ def questions(request):
 
 
 @login_required
-def dashboard(request):
-
+def dashboard(request):    
     def detractor(obj):
         s = 0
         for i in obj:
@@ -50,66 +50,95 @@ def dashboard(request):
         #Variance 
 
     def variance(target, measure):
-        x = round(target - measure, 2)
+        x = round(measure - target, 2)
         return x 
-    
-    object = Survey.objects.filter(sitecode=request.user.pk)
-    
+
+    today = datetime.now()
+
+    def countobject(time, values):
+        x = time.values_list(values, flat=True)
+        x = int(len(x))
+        return x
+
+    def queryobject(time, values):
+        y = time.values_list(values, flat=True)
+        y = detractor(y)
+        return y 
+
+    def npsobject(time, values):
+        y = time.values_list(values, flat=True)
+        y = calculate_nps(y)
+        return y 
+    #month objects
+    currentmonthobject = Survey.objects.filter(sitecode=request.user.pk, date_submitted__year=today.year, date_submitted__month=today.month)
+    currentyearobject = Survey.objects.filter(sitecode=request.user.pk, date_submitted__year=today.year)    
     target = Profile.objects.filter(user=request.user.pk)
-    #Number of Responses
-    responses = object.values_list('nps', flat=True)
-    responses = int(len(responses))
-    
-    #Calculate NPS
-    nps = object.values_list('nps', flat=True)
-    nps = calculate_nps(nps)
-    #Service score 
-    service = object.values_list('service', flat=True)
-    service = detractor(service)
+
+    #Monthly Score
+    mresponses = countobject(currentmonthobject, 'nps')
+    mnps = npsobject(currentmonthobject, 'nps')
+    mservice = queryobject(currentmonthobject, 'service')
+    mcleanliness = queryobject(currentmonthobject, 'cleanliness')
+    mdinnerqual = queryobject(currentmonthobject, 'dinnerqual')
+    mdinnerservice = queryobject(currentmonthobject, 'dinnerservice')
+    mbreakfastqual = queryobject(currentmonthobject, 'breakfastqual')
+    mbreakfastservice = queryobject(currentmonthobject, 'breakfastservice')
+    mtmexceeds = currentmonthobject.filter(tmexceed=True).count()
+    mtotal = currentmonthobject.count()
+    mtmexceed = round((mtmexceeds / mtotal)*100, 2)
+    mfeedback = currentmonthobject.order_by('-date_submitted').exclude(anyfeedback__isnull=True).exclude(anyfeedback__exact="")
+
+
+    #Year to date scores
+    yresponses = countobject(currentyearobject, 'nps')
+    ynps = npsobject(currentyearobject, 'nps')
+    yservice = queryobject(currentyearobject, 'service')
+    ycleanliness = queryobject(currentyearobject, 'cleanliness')
+    ydinnerqual = queryobject(currentyearobject, 'dinnerqual')
+    ydinnerservice = queryobject(currentyearobject, 'dinnerservice')
+    ybreakfastqual = queryobject(currentyearobject, 'breakfastqual')
+    ybreakfastservice = queryobject(currentyearobject, 'breakfastservice')
+    ytmexceeds = currentyearobject.filter(tmexceed=True).count()
+    ytotal = currentyearobject.count()
+    ytmexceed = round((ytmexceeds / ytotal)*100, 2)
+    yfeedback = currentyearobject.order_by('-date_submitted').exclude(anyfeedback__isnull=True).exclude(anyfeedback__exact="")
+
+
+
     servicetarget = target.values_list('servicetarget', flat=True)[0]
-    servicevariance = variance(servicetarget, service)
+    servicevariance = variance(servicetarget, yservice)
     #Cleanliness score
-    cleanliness = object.values_list('cleanliness', flat=True)
-    cleanliness = detractor(cleanliness)
+
     cleanlinesstarget = target.values_list('cleanlinesstarget', flat=True)[0]
-    cleanlinessvariance = variance(cleanlinesstarget, cleanliness)
-
-    #Dinner Quality
-    dinnerqual = object.values_list('dinnerqual', flat=True)
-    dinnerqual = detractor(dinnerqual)
-    #Dinner Service
-    dinnerservice = object.values_list('dinnerservice', flat=True)
-    dinnerservice = detractor(dinnerservice)
-    #Breakfast Quality
-    breakfastqual = object.values_list('breakfastqual', flat=True)
-    breakfastqual = detractor(breakfastqual)
-    #Breakfast Service
-    breakfastservice = object.values_list('breakfastservice', flat=True)
-    breakfastservice = detractor(breakfastservice)
-    #TM Exceeds 
-    tmexceeds = object.filter(tmexceed=True).count()
-    total = object.count()
-    tmexceed = round((tmexceeds / total)*100, 2)
-    feedback = object.order_by('-date_submitted').exclude(anyfeedback__isnull=True).exclude(anyfeedback__exact="")
-
+    cleanlinessvariance = variance(cleanlinesstarget, ycleanliness)
 
 
 
     context = {
-        'feedback': feedback,
-        'tmexceed': tmexceed,
-        'responses': responses,
-        'dinnerqual': dinnerqual,
-        'dinnerservice': dinnerservice,
-        'breakfastqual': breakfastqual,
-        'breakfastservice': breakfastservice,
-        'cleanliness': cleanliness,
-        'nps': nps,
-        'service': service, 
+        'mfeedback': mfeedback,
+        'mtmexceed': mtmexceed,
+        'mresponses': mresponses,
+        'mdinnerqual': mdinnerqual,
+        'mdinnerservice': mdinnerservice,
+        'mbreakfastqual': mbreakfastqual,
+        'mbreakfastservice': mbreakfastservice,
+        'mcleanliness': mcleanliness,
+        'mnps': mnps,
+        'mservice': mservice, 
         'servicevariance': servicevariance,
         'servicetarget': servicetarget,
         'cleanlinessvariance': cleanlinessvariance,
-        'cleanlinesstarget': cleanlinesstarget
+        'cleanlinesstarget': cleanlinesstarget,
+        'yfeedback': yfeedback,
+        'ytmexceed': ytmexceed,
+        'yresponses': yresponses,
+        'ydinnerqual': ydinnerqual,
+        'ydinnerservice': ydinnerservice,
+        'ybreakfastqual': ybreakfastqual,
+        'ybreakfastservice': ybreakfastservice,
+        'ycleanliness': ycleanliness,
+        'ynps': ynps,
+        'yservice': yservice, 
     }
 
     return render(request, 'survey/dashboard.html', context)

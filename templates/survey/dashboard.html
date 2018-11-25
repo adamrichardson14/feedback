@@ -5,9 +5,10 @@
 <div class="container">
         <h1>Dashboard</h1>
         <h3>Welcome <span class="text-muted"> {{user.username}}</h3></span>
+        <p>We hope that you're having a great day. Check out your scores!</p>
 
 <div class="row"> <!--SERVICE SECTION -->
-        <h2 class="text-center">Quality of Service</h2>
+        <h2 class="text-center">Quality of Service Received</h2>
         <p class="lead text-center">This is a measure of how your customers rate the service received from the team. This is a net measure. That means we take the amount of people who rate 5/5, and subtract the amount that rate 1/5. This gives the net score.</p>
 
     <div class="col-md-3">
@@ -19,10 +20,10 @@
                 <h6 class="card-subtitle">
                     Month to date
                 </h6>
-                {% if service > servicetarget %}
-                <h2 class="text-success">{{service}}% :)</h2>
+                {% if mservice > servicetarget %}
+                <h2 class="text-success">{{mservice}}% :)</h2>
                 {% else %}
-                <h2 class="text-danger">{{service}}% :(</h2>
+                <h2 class="text-danger">{{mservice}}% :(</h2>
                 {% endif %}
             </div>
         </div>
@@ -37,10 +38,10 @@
                 <h6 class="card-subtitle">
                     Year to date
                 </h6>
-                {% if service > servicetarget %}
-                <h2 class="text-success">{{service}}% :)</h2>
+                {% if yservice > servicetarget %}
+                <h2 class="text-success">{{yservice}}% :)</h2>
                 {% else %}
-                <h2 class="text-danger">{{service}}% :(</h2>
+                <h2 class="text-danger">{{yservice}}% :(</h2>
                 {% endif %}
             </div>
         </div> 
@@ -49,7 +50,7 @@
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">
-                    Service Variance
+                    Variance to Target
                 </h5>
                 <h6 class="card-subtitle">
                     Variance Year to date
@@ -74,109 +75,155 @@
             <h2>{{servicetarget}}%</h2>
         </div>
     </div>
-    </div>
-
-        
-        
-    </div> <!-- row end-->
+    </div>  
+</div> <!-- row end-->
 
 
-    <div class="row"> <!--CLEANLINESS SECTION-->
-        <h2 class="text-center">Hotel Cleanliness</h2>
-        <p class="lead text-center">This is a measure of how your customers rate the cleanliness of your hotel. This is a net measure. That means we take the amount of people who rate 5/5, and subtract the amount that rate 1/5. This gives the net score.</p>
+<div class="row"> <!--CLEANLINESS SECTION-->
+    <h2 class="text-center">How clean is your hotel? </h2>
+    <p class="lead text-center">This is a measure of how your customers rate the cleanliness of your hotel. This is a net measure. That means we take the amount of people who rate 5/5, and subtract the amount that rate 1/5. This gives the net score.</p>
 
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">
-                    Cleanliness Score
-                </h5>
-                <h6 class="card-subtitle">
-                    Month to date
-                </h6>
-                {% if cleanliness > cleanlinesstarget %}
-                <h2 class="text-success">{{cleanliness}}% :)</h2>
-                {% else %}
-                <h2 class="text-danger">{{cleanliness}}% :(</h2>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">
-                    Cleanliness Score
-                </h5>
-                <h6 class="card-subtitle">
-                    Year to date
-                </h6>
-                {% if cleanliness > cleanlinesstarget %}
-                <h2 class="text-success">{{cleanliness}}% :)</h2>
-                {% else %}
-                <h2 class="text-danger">{{cleanliness}}% :(</h2>
-                {% endif %}
-            </div>
-        </div> 
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">
-                    Cleanliness Variance
-                </h5>
-                <h6 class="card-subtitle">
-                    Variance Year to date
-                </h6>
-                {% if cleanlinessvariance > 0  %}
-                <h2 class="text-success">{{cleanlinessvariance}}%</h2>
-                {% else %}
-                <h2 class="text-danger">{{cleanlinessvariance}}%</h2>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-center">
+<div class="col-md-3">
+    <div class="card text-center">
         <div class="card-body">
             <h5 class="card-title">
-                Service Target
+                Cleanliness Score
+            </h5>
+            <h6 class="card-subtitle">
+                Month to date
+            </h6>
+            {% if mcleanliness > cleanlinesstarget %}
+            <h2 class="text-success">{{mcleanliness}}% :)</h2>
+            {% else %}
+            <h2 class="text-danger">{{mcleanliness}}% :(</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">
+                Cleanliness Score
             </h5>
             <h6 class="card-subtitle">
                 Year to date
             </h6>
-            <h2>{{cleanlinesstarget}}%</h2>
+            {% if ycleanliness > cleanlinesstarget %}
+            <h2 class="text-success">{{ycleanliness}}% :)</h2>
+            {% else %}
+            <h2 class="text-danger">{{ycleanliness}}% :(</h2>
+            {% endif %}
+        </div>
+    </div> 
+</div>
+<div class="col-md-3">
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">
+                Cleanliness Variance
+            </h5>
+            <h6 class="card-subtitle">
+                Variance Year to date
+            </h6>
+            {% if cleanlinessvariance > 0  %}
+            <h2 class="text-success">{{cleanlinessvariance}}%</h2>
+            {% else %}
+            <h2 class="text-danger">{{cleanlinessvariance}}%</h2>
+            {% endif %}
         </div>
     </div>
+</div>
+<div class="col-md-3">
+    <div class="card text-center">
+    <div class="card-body">
+        <h5 class="card-title">
+            Service Target
+        </h5>
+        <h6 class="card-subtitle">
+            Year to date
+        </h6>
+        <h2>{{cleanlinesstarget}}%</h2>
     </div>
+</div>
+</div>
 
+</div> <!-- row ends-->
+
+
+<div class="row">
+    <h2>Team Exceeds Expectations</h2>
+    <p class="lead">We ask did our team members exceed your expectations? This is an excellent measure which shows a percentage of how often we exceed our guests expectation. This is a simple yes or no question. The company average is 40%. How does your team compare? Green if your score is greater than company average and red if it's less than company average </p>
+<div class="col-md-6">
+
+<div class="card text-center">
+    <div class="card-body">
+        <div class="card-title">
+            Team Exceeds Expectations 
+        </div>
+        <div class="card-subtitle">
+            Period to date
+        </div>
+        {% if mtmexceed > 40 %}
+        <h1 class="text-success">{{mtmexceed}}%</h1>
+        {% else  %}
+        <h1 class="text-danger">{{mtmexceed}}%</h1>
+        {% endif %}
     </div>
+</div>
+</div>
+<div class="col-md-6">
+    <div class="card text-center">
+        <div class="card-body">
+            <div class="card-title">
+                Team Exceeds Expectations 
+            </div>
+            <div class="card-subtitle">
+                Year to date
+            </div>
+            {% if ytmexceed > 40 %}
+            <h1 class="text-success">{{ytmexceed}}%</h1>
+            {% else  %}
+            <h1 class="text-danger">{{ytmexceed}}%</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div><!-- row end-->
+
+
+
+<div class="row">
+
+    <div class="col-md-4 mt-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="card-title">
+                    Total This period
+                </div>
+                <h1>{{mresponses}}</h1>
+                <div class="card-title">
+                    Total This year
+                </div>
+                <h1>{{yresponses}}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <p>Hello --- We will insert a chart here not to worry!</p>
+    </div>
+</div>
 
 </div> <!-- container end-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p>Number of responses: {{responses}} </p>
-<p>NPS {{ nps }} % </p>
-<p>Service Score {{ service }} % </p>
-<p>Cleanliness Score {{ cleanliness }} % </p>
-<p>Dinner Quality Score {{ dinnerqual }} % </p>
-<p>Dinner Service Score {{ dinnerservice }} % </p>
-<p>Breakfast Quality Score {{ breakfastqual }} % </p>
-<p>Breakfast Service Score {{ breakfastservice }} % </p>
-<p>Team members exceed expectations {{tmexceed}}% of the time</p>
+<p>Number of responses: {{yresponses}} </p>
+<p>NPS {{ ynps }} % </p>
+<p>Dinner Quality Score {{ ydinnerqual }} % </p>
+<p>Dinner Service Score {{ ydinnerservice }} % </p>
+<p>Breakfast Quality Score {{ ybreakfastqual }} % </p>
+<p>Breakfast Service Score {{ ybreakfastservice }} % </p>
+<p>Team members exceed expectations {{ytmexceed}}% of the time</p>
 
 
 
@@ -208,6 +255,7 @@
 
 
 </div>
+
 {% endblock %}
 
 
